@@ -23,8 +23,7 @@ object MoviesRepository {
     fun getPopularMovies(
         page: Int = 1,
         onSuccess: (movies: List<Movie>) -> Unit,
-        onError: () -> Unit)
-    {
+        onError: () -> Unit) {
         api.getPopularMovies(page = page)
             .enqueue(object : Callback<GetMoviesResponse> {
                 override fun onResponse(
