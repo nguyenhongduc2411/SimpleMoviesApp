@@ -1,6 +1,5 @@
-package com.example.simplemoviesapp.apis
+package com.example.simplemoviesapp
 
-import com.example.simplemoviesapp.models.GetMoviesResponse
 import retrofit2.Call
 import retrofit2.http.GET
 import retrofit2.http.Query
