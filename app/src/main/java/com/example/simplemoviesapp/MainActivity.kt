@@ -2,10 +2,12 @@ package com.example.simplemoviesapp
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.simplemoviesapp.adapters.MoviesAdapter
+import com.example.simplemoviesapp.models.Movie
+import com.example.simplemoviesapp.repositories.MoviesRepository
 
 class MainActivity : AppCompatActivity() {
     private lateinit var upcomingMovies: RecyclerView
@@ -18,7 +20,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        upcomingMovies = findViewById(R.id.upcoming_movies)
+//        upcomingMovies = findViewById(R.id.upcoming_movies)
         upcomingMoviesLayoutMgr = LinearLayoutManager(
             this,
             LinearLayoutManager.VERTICAL,

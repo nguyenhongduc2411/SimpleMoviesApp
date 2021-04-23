@@ -31,6 +31,10 @@ android {
     kotlinOptions {
         jvmTarget = '1.8'
     }
+
+    dataBinding {
+        enabled = true
+    }
 }
 
 dependencies {
@@ -51,7 +55,9 @@ dependencies {
 
     // ViewModel and LiveData
     // https://developer.android.com/jetpack/androidx/releases/lifecycle
+    implementation "android.arch.lifecycle:extensions:1.1.1"
     implementation "androidx.lifecycle:lifecycle-extensions:2.2.0"
+    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:2.4.0-alpha01"
 
     // Retrofit
     // https://github.com/square/retrofit

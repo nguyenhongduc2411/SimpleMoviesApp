@@ -1,6 +1,8 @@
-package com.example.simplemoviesapp
+package com.example.simplemoviesapp.repositories
 
-import android.util.Log
+import com.example.simplemoviesapp.apis.Api
+import com.example.simplemoviesapp.models.GetMoviesResponse
+import com.example.simplemoviesapp.models.Movie
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
