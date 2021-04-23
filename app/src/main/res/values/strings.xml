@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">SimpleMoviesApp</string>
+
+    <string name="error_fetch_movies">Please check your internet connection</string>
+</resources>
