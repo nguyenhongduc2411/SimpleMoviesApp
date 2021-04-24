@@ -1,6 +1,8 @@
-package com.example.simplemoviesapp
+package com.example.simplemoviesapp.repositories
 
-import android.util.Log
+import com.example.simplemoviesapp.apis.Api
+import com.example.simplemoviesapp.models.GetMoviesResponse
+import com.example.simplemoviesapp.models.Movie
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -21,14 +23,14 @@ object MoviesRepository {
     }
 
     fun getPopularMovies(
-        page: Int = 1,
-        onSuccess: (movies: List<Movie>) -> Unit,
-        onError: () -> Unit) {
+            page: Int = 1,
+            onSuccess: (movies: List<Movie>) -> Unit,
+            onError: () -> Unit) {
         api.getPopularMovies(page = page)
             .enqueue(object : Callback<GetMoviesResponse> {
                 override fun onResponse(
-                    call: Call<GetMoviesResponse>,
-                    response: Response<GetMoviesResponse>
+                        call: Call<GetMoviesResponse>,
+                        response: Response<GetMoviesResponse>
                 ) {
                     if (response.isSuccessful) {
                         val responseBody = response.body()
@@ -51,14 +53,14 @@ object MoviesRepository {
     }
 
     fun getUpcomingMovies(
-        page: Int = 1,
-        onSuccess: (movies: List<Movie>) -> Unit,
-        onError: () -> Unit) {
+            page: Int = 1,
+            onSuccess: (movies: List<Movie>) -> Unit,
+            onError: () -> Unit) {
         api.getUpcomingMovies(page = page)
             .enqueue(object : Callback<GetMoviesResponse> {
                 override fun onResponse(
-                    call: Call<GetMoviesResponse>,
-                    response: Response<GetMoviesResponse>
+                        call: Call<GetMoviesResponse>,
+                        response: Response<GetMoviesResponse>
                 ) {
                     if (response.isSuccessful) {
                         val responseBody = response.body()

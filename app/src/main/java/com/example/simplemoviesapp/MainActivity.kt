@@ -3,11 +3,13 @@ package com.example.simplemoviesapp
 import android.annotation.SuppressLint
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.widget.Toast
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.simplemoviesapp.adapters.MoviesAdapter
+import com.example.simplemoviesapp.models.Movie
+import com.example.simplemoviesapp.repositories.MoviesRepository
 
 class MainActivity : AppCompatActivity() {
     private lateinit var upcomingMovies: RecyclerView

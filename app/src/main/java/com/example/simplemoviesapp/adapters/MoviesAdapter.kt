@@ -1,6 +1,5 @@
-package com.example.simplemoviesapp
+package com.example.simplemoviesapp.adapters
 
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -8,8 +7,8 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.bumptech.glide.load.resource.bitmap.CenterCrop
-import org.w3c.dom.Text
+import com.example.simplemoviesapp.models.Movie
+import com.example.simplemoviesapp.R
 
 class MoviesAdapter(
     private var movies: MutableList<Movie>
