@@ -28,12 +28,19 @@ class MainActivity : AppCompatActivity() {
         upcomingMovies = findViewById(R.id.upcoming_movies)
 
         mMainViewModel = ViewModelProvider(this).get(MainViewModel::class.java)
+
+        mMainViewModel.getUpcomingMovies(::onError)
+
         mMainViewModel.movies.observe(this, Observer {
             upcomingMoviesAdapter.appendMovies(it)
             attachUpcomingMoviesOnScrollListener()
         })
 
         initRecyclerView()
+    }
+
+    private fun onError() {
+        Toast.makeText(this, getString(R.string.error_fetch_movies), Toast.LENGTH_SHORT).show()
     }
 
     @SuppressLint("UseCompatLoadingForDrawables")
@@ -62,7 +69,7 @@ class MainActivity : AppCompatActivity() {
 
                 if (firstVisibleItem + visibleItemCount >= totalItemCount / 2) {
                     upcomingMovies.removeOnScrollListener(this)
-                    mMainViewModel.getUpcomingMovies()
+                    mMainViewModel.getUpcomingMovies(::onError)
                 }
             }
         })

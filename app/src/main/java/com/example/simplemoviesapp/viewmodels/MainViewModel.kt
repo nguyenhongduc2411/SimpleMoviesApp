@@ -12,14 +12,10 @@ import com.example.simplemoviesapp.repositories.MoviesRepository
 class MainViewModel : ViewModel() {
     private val mRepo = MoviesRepository
     val movies: LiveData<List<Movie>> get() = mRepo.movies //getter
-    private var upcomingMoviesPage = 1
+    private var upcomingMoviesPage = 0
 
-    init {
-        MoviesRepository.getUpcomingMovies(upcomingMoviesPage)
-    }
-
-    fun getUpcomingMovies() {
+    fun getUpcomingMovies(onError: () -> Unit) {
         upcomingMoviesPage++
-        MoviesRepository.getUpcomingMovies(upcomingMoviesPage)
+        MoviesRepository.getUpcomingMovies(upcomingMoviesPage, onError)
     }
 }

@@ -62,7 +62,9 @@ object MoviesRepository {
 //            })
 //    }
 
-    fun getUpcomingMovies(page: Int = 1) {
+    fun getUpcomingMovies(
+        page: Int = 1,
+        onError: () -> Unit) {
         api.getUpcomingMovies(page = page)
             .enqueue(object : Callback<GetMoviesResponse> {
                 override fun onResponse(
@@ -77,18 +79,18 @@ object MoviesRepository {
                             mMoviesList = responseBody.movies
                             mMovies.value = mMoviesList
                         } else {
-//                            onError.invoke()
+                            onError.invoke()
                             Log.d("MoviesRepository: ", "Error")
                         }
                     }
                     else {
-//                        onError.invoke()
+                        onError.invoke()
                         Log.d("MoviesRepository: ", "Error")
                     }
                 }
 
                 override fun onFailure(call: Call<GetMoviesResponse>, t: Throwable) {
-//                    onError.invoke()
+                    onError.invoke()
                     Log.d("MoviesRepository: ", "Error")
                 }
             })
