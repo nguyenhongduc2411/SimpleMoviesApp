@@ -1,5 +1,6 @@
 package com.example.simplemoviesapp.adapters
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,9 +11,9 @@ import com.bumptech.glide.Glide
 import com.example.simplemoviesapp.models.Movie
 import com.example.simplemoviesapp.R
 
-class MoviesAdapter(
-    private var movies: MutableList<Movie>
-) : RecyclerView.Adapter<MoviesAdapter.MovieViewHolder>() {
+class MoviesAdapter: RecyclerView.Adapter<MoviesAdapter.MovieViewHolder>() {
+
+    private var mMovies: MutableList<Movie> = mutableListOf()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MovieViewHolder {
         val view = LayoutInflater
@@ -21,19 +22,19 @@ class MoviesAdapter(
         return MovieViewHolder(view)
     }
 
-    override fun getItemCount(): Int = movies.size
+    override fun getItemCount(): Int = mMovies.size
 
     override fun onBindViewHolder(holder: MovieViewHolder, position: Int) {
-        holder.bind(movies[position])
+        holder.bind(mMovies[position])
     }
 
     fun appendMovies(movies: List<Movie>) {
-        //Log.d("MoviesAdapter", "moviesSize: ${movies.size} thisMoviesSize: ${this.movies.size}")
+        Log.d("MoviesAdapter", "moviesSize: ${movies.size} thisMoviesSize: ${this.mMovies.size}")
 
-        val oldSize = this.movies.size
-        this.movies.addAll(movies)
+        val oldSize = this.mMovies.size
+        this.mMovies.addAll(movies)
 
-        //Log.d("MoviesAdapter", "moviesSize: ${movies.size} thisMoviesSize: ${this.movies.size}")
+        Log.d("MoviesAdapter", "moviesSize: ${movies.size} thisMoviesSize: ${this.mMovies.size}")
 
         notifyItemRangeInserted(
             oldSize,

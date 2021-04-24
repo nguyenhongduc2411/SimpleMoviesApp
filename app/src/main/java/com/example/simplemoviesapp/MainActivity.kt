@@ -4,30 +4,44 @@ import android.annotation.SuppressLint
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.simplemoviesapp.adapters.MoviesAdapter
 import com.example.simplemoviesapp.models.Movie
 import com.example.simplemoviesapp.repositories.MoviesRepository
+import com.example.simplemoviesapp.viewmodels.MainViewModel
 
 class MainActivity : AppCompatActivity() {
     private lateinit var upcomingMovies: RecyclerView
     private lateinit var upcomingMoviesAdapter: MoviesAdapter
     private lateinit var upcomingMoviesLayoutMgr: LinearLayoutManager
 
-    private var upcomingMoviesPage = 1
+    private lateinit var mMainViewModel: MainViewModel
 
-    @SuppressLint("UseCompatLoadingForDrawables")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
         upcomingMovies = findViewById(R.id.upcoming_movies)
+
+        mMainViewModel = ViewModelProvider(this).get(MainViewModel::class.java)
+        mMainViewModel.movies.observe(this, Observer {
+            upcomingMoviesAdapter.appendMovies(it)
+            attachUpcomingMoviesOnScrollListener()
+        })
+
+        initRecyclerView()
+    }
+
+    @SuppressLint("UseCompatLoadingForDrawables")
+    private fun initRecyclerView() {
         upcomingMoviesLayoutMgr = LinearLayoutManager(
-            this,
-            LinearLayoutManager.VERTICAL,
-            false
+                this,
+                LinearLayoutManager.VERTICAL,
+                false
         )
         upcomingMovies.layoutManager = upcomingMoviesLayoutMgr
 
@@ -35,38 +49,8 @@ class MainActivity : AppCompatActivity() {
         itemDecoration.setDrawable(getDrawable(R.drawable.divider)!!)
         upcomingMovies.addItemDecoration(itemDecoration)
 
-        upcomingMoviesAdapter = MoviesAdapter(mutableListOf())
+        upcomingMoviesAdapter = MoviesAdapter()
         upcomingMovies.adapter = upcomingMoviesAdapter
-
-        getUpcomingMovies()
-    }
-
-    private fun onUpcomingMoviesFetched(movies: List<Movie>) {
-        //Log.d("MainActivity", "Movies: $movies")
-        upcomingMoviesAdapter.appendMovies(movies)
-        attachUpcomingMoviesOnScrollListener()
-    }
-
-    private fun onError() {
-        Toast.makeText(this, getString(R.string.error_fetch_movies), Toast.LENGTH_SHORT).show()
-    }
-
-    private fun getUpcomingMovies() {
-        MoviesRepository.getUpcomingMovies(
-            upcomingMoviesPage,
-            onSuccess = ::onUpcomingMoviesFetched,
-            onError = ::onError
-        )
-
-        //Alternative way:
-//        MoviesRepository.getUpcomingMovies(
-//                onSuccess = { movies ->
-//                    Log.d("MainActivity", "Movies: $movies")
-//                },
-//                onError = {
-//                    Toast.makeText(this, getString(R.string.error_fetch_movies), Toast.LENGTH_SHORT).show()
-//                }
-//        )
     }
 
     private fun attachUpcomingMoviesOnScrollListener() {
@@ -78,8 +62,7 @@ class MainActivity : AppCompatActivity() {
 
                 if (firstVisibleItem + visibleItemCount >= totalItemCount / 2) {
                     upcomingMovies.removeOnScrollListener(this)
-                    upcomingMoviesPage++
-                    getUpcomingMovies()
+                    mMainViewModel.getUpcomingMovies()
                 }
             }
         })
